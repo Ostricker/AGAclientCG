@@ -5,6 +5,8 @@
 
 * {
     -fx-primary : #2A2E37;
+    -fx-primary-a: #21242b;
+    -fx-primary-b: #16181d;
     -fx-secondary : #FFFF8D;
     -fx-primarytext : #B2B2B2;
     -fx-blue: #1976D2;
@@ -14,6 +16,10 @@
 
 .root{
     -fx-background-color: -fx-primary;
+}
+
+.windowPane {
+    -fx-background-color: -fx-primary-a;
 }
 
 .glyph-icon
@@ -54,6 +60,7 @@
 .radio-button{
     -fx-text-fill: -fx-primarytext;
 }
+
 
 /*Login Screen Specific*/
 
@@ -108,7 +115,7 @@
 .menu-bar{
     -fx-font-size: 14;
     -fx-base : -fx-primary;
-    -fx-background-color: -fx-primary;
+    -fx-background-color: -fx-primary-b;
 }
 
 .context-menu
