@@ -61,30 +61,30 @@
                                  </HBox.margin>
                               </ImageView>
                            </children></HBox>
-                        <HBox alignment="CENTER" prefWidth="110.0" styleClass="windowPane">
+                        <AnchorPane prefHeight="60.0" prefWidth="100.0">
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </HBox.margin>
                            <children>
-                              <Label contentDisplay="CENTER" text="DASHBOARD" />
+                              <Button fx:id="dashboardButton" layoutX="26.0" layoutY="24.0" mnemonicParsing="false" onAction="#changeScreen" text="Dashboard" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="60.0" prefWidth="100.0">
+                           <children>
+                              <Button fx:id="teamlistButton" layoutX="26.0" layoutY="24.0" mnemonicParsing="false" onAction="#changeScreen" text="Teamlist" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                            <HBox.margin>
-                              <Insets left="20.0" right="5.0" />
+                              <Insets left="10.0" right="10.0" />
                            </HBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER" prefWidth="110.0" styleClass="windowPane">
+                        </AnchorPane>
+                        <AnchorPane prefHeight="60.0" prefWidth="100.0">
                            <children>
-                              <Label contentDisplay="CENTER" text="TEAMLIST" />
+                              <Button fx:id="tableButton" layoutX="26.0" layoutY="24.0" mnemonicParsing="false" onAction="#changeScreen" text="Table" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                            <HBox.margin>
-                              <Insets left="5.0" right="5.0" />
+                              <Insets left="10.0" right="10.0" />
                            </HBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER" prefWidth="110.0" styleClass="windowPane">
-                           <children>
-                              <Label contentDisplay="CENTER" text="TABLE" />
-                           </children>
-                           <HBox.margin>
-                              <Insets left="5.0" right="5.0" />
-                           </HBox.margin>
-                        </HBox>
+                        </AnchorPane>
                         <HBox alignment="CENTER" prefWidth="110.0" styleClass="windowPane">
                            <children>
                               <Label contentDisplay="CENTER" text="LABEL" />

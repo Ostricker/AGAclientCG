@@ -1,30 +1,31 @@
-
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 
-import java.io.IOException;
+public class TableWindowController {
 
-public class MainWindowController {
-
-    public Button tableButton;
-    public Button teamlistButton;
+    @FXML
+    private Button tableButton;
     public Button dashboardButton;
+    public Button teamlistButton;
 
-    public void buttonPress(ActionEvent actionEvent) {
+    @FXML private ResourceBundle resources;
+    @FXML private URL location;
+
+    @FXML void initialize() {
+
     }
-
-    public void action(ActionEvent actionEvent) {
-    }
-
-
 
     //TODO: Create better way to change scenes. This is a lot of duplicate code.
     //TODO: Change buttons to TOGGLE buttons
-    public void changeScreen(ActionEvent actionEvent) throws IOException {
+    @FXML void changeScreen(ActionEvent actionEvent) throws IOException {
         Object source = actionEvent.getSource();
         Button clickedBtn = (Button) source;
-            System.out.println(clickedBtn.getId());
+        System.out.println(clickedBtn.getId());
 
         SceneManipulationHelper sceneManipulationHelper = new SceneManipulationHelper(tableButton.getScene());
         sceneManipulationHelper.addScreen("dashboard", FXMLLoader.load(getClass().getResource("MainWindow.fxml")));
@@ -43,4 +44,6 @@ public class MainWindowController {
                 break;
         }
     }
+
+
 }
