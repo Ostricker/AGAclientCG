@@ -54,7 +54,7 @@
                            <children>
                               <ImageView fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@resources/logo-alienware-white.png" />
+                                    <Image url="@logo-alienware-white.png" />
                                  </image>
                                  <HBox.margin>
                                     <Insets top="5.0" />
