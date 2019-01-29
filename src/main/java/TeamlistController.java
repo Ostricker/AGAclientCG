@@ -26,27 +26,21 @@ public class TeamlistController {
     public TableColumn teamColumn;
     public TableColumn positionColumn;
 
-    private static Connection con;
-    private static Statement stat;
-    private PreparedStatement prep;
-
     private ObservableList<Note> dataNotes;
 
-    @FXML void initialize() {
-        connect();
+    @FXML void initialize() throws SQLException {
+        SQLite sqLite = new SQLite();
+        sqLite.openDB("src/main/database/main_database.db");
+        System.out.println("Connected to database.");
+        sqLite.selectFromTable("SELECT ID, FirstName, LastName  FROM players");
     }
 
-    private Connection connect(){
-        String url = "jdbc:sqlite:src/main/database/main_database.db";
-        Connection con = null;
-        try {
-            con = DriverManager.getConnection(url);
-            System.out.println("Connected to database.");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return con;
-    }
+
+
+
+
+
+
 
 
     @FXML private Button tableButton;
