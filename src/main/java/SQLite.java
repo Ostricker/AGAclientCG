@@ -5,28 +5,25 @@ import java.sql.*;
 
 public class SQLite {
 
-    private Connection connection = null;
-    private String urlClass;
 
     //TODO: Create table check in case table is not already created
     public void createTable(){
     }
 
     //TODO: Open DB here. Code here - init in main
-    public Connection openDB(String databaseUrl){
-        String url = "jdbc:sqlite:"+databaseUrl;
-
+    public Connection connect(){
+        String url = "jdbc:sqlite:src/main/database/main_database.db";
 
         Connection con = null;
         try {
             con = DriverManager.getConnection(url);
-            urlClass = databaseUrl;
+            System.out.println("Connection estabilished");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        connection = con;
         return con;
     }
+
 
     //TODO: Insert statement with parameters
     public void insertIntoTable(){
@@ -53,6 +50,8 @@ public class SQLite {
     public ObservableList<Player> temporaryGetPlayers(){
         ObservableList<Player> player = FXCollections.observableArrayList();
         player.add(new Player("Jan", "Olšanský", "Ostricker","Gunrunners","Active Player","7321567654231"));
+
+
 
         return player;
     }
