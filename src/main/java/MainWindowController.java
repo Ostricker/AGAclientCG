@@ -1,13 +1,13 @@
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
 
 public class MainWindowController {
 
+    public Button dashboardButton;
 
 
     public void buttonPress(ActionEvent actionEvent) {
@@ -18,9 +18,6 @@ public class MainWindowController {
 
 
 
-
-
-    public Button dashboardButton;
 
     //TODO: Change buttons to TOGGLE buttons
     @FXML

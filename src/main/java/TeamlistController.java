@@ -22,6 +22,7 @@ public class TeamlistController {
     @FXML private ResourceBundle resources;
     @FXML private URL location;
 
+    public Button dashboardButton;
     public TableView playersTableView;
     private ObservableList<ObservableList> data;
 
@@ -35,8 +36,6 @@ public class TeamlistController {
      }
 
 
-
-    public Button dashboardButton;
 
     //TODO: Change buttons to TOGGLE buttons
     @FXML void changeScreen(ActionEvent actionEvent) throws IOException {
