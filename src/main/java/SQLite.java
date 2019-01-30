@@ -1,3 +1,6 @@
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.*;
 
 public class SQLite {
@@ -31,19 +34,10 @@ public class SQLite {
     }
 
     //TODO: SELECT statement with parameters
-    public void selectFromTable(String statement) throws SQLException {
+    public void selectFromTable() throws SQLException {
 
 
-        Connection con = this.openDB(urlClass);
-        Statement stmt = con.createStatement();
-        ResultSet rs   = stmt.executeQuery(statement);
 
-        while (rs.next()){
-            System.out.println(rs.getInt("ID")+"\t"+
-                    rs.getString("FirstName") +"\t"+
-                    rs.getString("LastName") +"\t");
-
-        }
     }
 
     //TODO: UPDATE statement with parameters
@@ -54,5 +48,12 @@ public class SQLite {
     //TODO: DELETE statement with parameters
     public void deleteFromTable(){
 
+    }
+
+    public ObservableList<Player> temporaryGetPlayers(){
+        ObservableList<Player> player = FXCollections.observableArrayList();
+        player.add(new Player("Jan", "Olšanský", "Ostricker","Gunrunners","Active Player","7321567654231"));
+
+        return player;
     }
 }

@@ -169,9 +169,9 @@
                       <TableColumn fx:id="firstNameColumn" prefWidth="100.0" text="Jméno" />
                       <TableColumn fx:id="lastNameColumn" prefWidth="100.0" text="Příjmení" />
                         <TableColumn fx:id="nicknameColumn" prefWidth="100.0" text="Nickname" />
-                        <TableColumn fx:id="teamColumn" prefWidth="100.0" text="Team" />
-                        <TableColumn fx:id="positionColumn" prefWidth="100.0" text="Position" />
-                        <TableColumn fx:id="steamIDColumn" prefWidth="216.0" text="SteamID64" />
+                        <TableColumn fx:id="teamColumn" prefWidth="112.0" text="Team" />
+                        <TableColumn fx:id="positionColumn" prefWidth="155.0" text="Position" />
+                        <TableColumn fx:id="steamIDColumn" prefWidth="149.0" text="SteamID64" />
                     </columns>
                   </TableView>
                </children>

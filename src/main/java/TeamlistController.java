@@ -26,50 +26,39 @@ public class TeamlistController {
     public TableColumn teamColumn;
     public TableColumn positionColumn;
 
-    private ObservableList<Note> dataNotes;
+    SQLite sqLite = new SQLite();
 
     @FXML void initialize() throws SQLException {
-        SQLite sqLite = new SQLite();
         sqLite.openDB("src/main/database/main_database.db");
-        System.out.println("Connected to database.");
-        sqLite.selectFromTable("SELECT ID, FirstName, LastName  FROM players");
+
+
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("firstName"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("lastName"));
+        nicknameColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("nickname"));
+        teamColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("team"));
+        positionColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("position"));
+        steamIDColumn.setCellValueFactory(new PropertyValueFactory<Player, String>("steamId64"));
+
+        playersTableView.setItems(sqLite.temporaryGetPlayers());
     }
 
+    //TODO: Populate columns from database
+     public void populateColumns(){
+
+     }
 
 
 
-
-
-
-
-
-    @FXML private Button tableButton;
     public Button dashboardButton;
-    public Button teamlistButton;
 
-    //TODO: Create better way to change scenes. This is a lot of duplicate code.
     //TODO: Change buttons to TOGGLE buttons
     @FXML void changeScreen(ActionEvent actionEvent) throws IOException {
         Object source = actionEvent.getSource();
         Button clickedBtn = (Button) source;
-        System.out.println(clickedBtn.getId());
 
-        SceneManipulationHelper sceneManipulationHelper = new SceneManipulationHelper(tableButton.getScene());
-        sceneManipulationHelper.addScreen("dashboard", FXMLLoader.load(getClass().getResource("MainWindow.fxml")));
-        sceneManipulationHelper.addScreen("teamlist", FXMLLoader.load(getClass().getResource("Teamlist.fxml")));
-        sceneManipulationHelper.addScreen("table", FXMLLoader.load(getClass().getResource("TableWindow.fxml")));
-
-        switch (clickedBtn.getId()){
-            case "dashboardButton":
-                sceneManipulationHelper.activate("dashboard");
-                break;
-            case "teamlistButton":
-                sceneManipulationHelper.activate("teamlist");
-                break;
-            case "tableButton":
-                sceneManipulationHelper.activate("table");
-                break;
+        SceneManipulationHelper sceneManipulationHelper = new SceneManipulationHelper(dashboardButton.getScene());
+        sceneManipulationHelper.activate(clickedBtn.getId());
         }
     }
 
-}
+
