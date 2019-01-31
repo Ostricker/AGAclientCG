@@ -203,10 +203,13 @@
                </children></VBox>
          </left>
          <right>
-            <VBox prefHeight="388.0" prefWidth="117.0" styleClass="windowPane" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" prefHeight="388.0" prefWidth="117.0" styleClass="windowPane" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </BorderPane.margin></VBox>
+               </BorderPane.margin>
+               <children>
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#deleteRow" text="Delete row" />
+               </children></VBox>
          </right>
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">

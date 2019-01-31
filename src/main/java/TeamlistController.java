@@ -13,6 +13,8 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TeamlistController {
@@ -52,6 +54,7 @@ public class TeamlistController {
     //CONNECTION DATABASE
     public void buildData() throws SQLException {
         data = FXCollections.observableArrayList();
+        playersTableView.getColumns().clear();
 
         Connection conn;
         SQLite sqLite = new SQLite();
@@ -94,12 +97,22 @@ public class TeamlistController {
 
     public void confirmTableUpdate(ActionEvent actionEvent) throws SQLException {
         String statement = "INSERT INTO players(FirstName,LastName,Nickname,Team,Position,SteamID64) VALUES (\""+nameTextField.getText()+"\",\""+lastNameTextField.getText()+"\",\""+nicknameTextField.getText()+"\",\""+teamTextField.getText()+"\",\""+positionTextField.getText()+"\",\""+steamIDTextField.getText()+"\")";
-        playersTableView.getColumns().clear();
 
         SQLite sqLite = new SQLite();
         sqLite.insertIntoTable(statement);
 
         buildData();
+    }
+
+    public void deleteRow(ActionEvent actionEvent) throws SQLException {
+        List list = (List) playersTableView.getSelectionModel().getSelectedItem();
+        String statement = "DELETE FROM players WHERE id = "+list.get(0)+"";
+
+        SQLite sqLite = new SQLite();
+        sqLite.insertIntoTable(statement);
+
+        buildData();
+
     }
 }
 
