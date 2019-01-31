@@ -114,5 +114,22 @@ public class TeamlistController {
         buildData();
 
     }
+
+    public void updateRow(ActionEvent actionEvent) throws SQLException {
+        List list = (List) playersTableView.getSelectionModel().getSelectedItem();
+        String statement = "UPDATE players SET FirstName = \""+list.get(1)+
+                                            "\",LastName =\""+list.get(2)+
+                                            "\", Nickname = \""+list.get(3)+
+                                            "\", Team = \""+list.get(4)+
+                                            "\", Position = \""+list.get(5)+
+                                            "\", SteamID64 = \""+list.get(6)+
+                                            "\" WHERE ID = \""+list.get(0)+"\"";
+
+
+        SQLite sqLite = new SQLite();
+        sqLite.insertIntoTable(statement);
+
+        buildData();
+    }
 }
 
