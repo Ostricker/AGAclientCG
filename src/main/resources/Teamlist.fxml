@@ -2,18 +2,22 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="750.0" stylesheets="@dark-theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TeamlistController">
    <children>
@@ -142,7 +146,7 @@
             </VBox>
          </top>
          <bottom>
-            <HBox prefHeight="173.0" prefWidth="1250.0" styleClass="windowPane" BorderPane.alignment="CENTER">
+            <HBox prefHeight="139.0" prefWidth="1250.0" styleClass="windowPane" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </BorderPane.margin>
@@ -152,7 +156,51 @@
             <VBox alignment="CENTER" prefHeight="388.0" prefWidth="242.0" styleClass="windowPane" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </BorderPane.margin></VBox>
+               </BorderPane.margin>
+               <children>
+                  <Label text="Vyber tabulku:">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <ComboBox prefHeight="25.0" prefWidth="196.0" />
+                  <Pane prefHeight="57.0" prefWidth="242.0" />
+                  <TextField fx:id="nameTextField" prefHeight="25.0" prefWidth="156.0" promptText="Jméno">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="20.0" right="20.0" top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="lastNameTextField" prefHeight="25.0" prefWidth="156.0" promptText="Příjmení">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="20.0" right="20.0" top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="nicknameTextField" prefHeight="25.0" prefWidth="156.0" promptText="Nickname">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="20.0" right="20.0" top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="teamTextField" prefHeight="25.0" prefWidth="156.0" promptText="Team">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="20.0" right="20.0" top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="positionTextField" prefHeight="25.0" prefWidth="156.0" promptText="Pozice">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="20.0" right="20.0" top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="steamIDTextField" prefHeight="25.0" prefWidth="156.0" promptText="SteamID64">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="20.0" right="20.0" top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Button mnemonicParsing="false" onAction="#confirmTableUpdate" text="Potvrdit">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children></VBox>
          </left>
          <right>
             <VBox prefHeight="388.0" prefWidth="117.0" styleClass="windowPane" BorderPane.alignment="CENTER">

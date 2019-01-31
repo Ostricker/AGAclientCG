@@ -21,8 +21,9 @@ public class SQLite {
         return con;
     }
 
-    //TODO: Insert statement with parameters
-    public void insertIntoTable(){
+    public void insertIntoTable(String insertString) throws SQLException {
+        Statement statement = connect().createStatement();
+        statement.execute(insertString);
     }
 
     //TODO: SELECT statement with parameters
