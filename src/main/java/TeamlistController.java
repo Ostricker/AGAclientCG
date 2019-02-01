@@ -25,7 +25,6 @@ public class TeamlistController {
     public TextField teamTextField;
     public TextField positionTextField;
     public TextField steamIDTextField;
-    public ComboBox tableChangeComboBox;
 
     @FXML private ResourceBundle resources;
     @FXML private URL location;
@@ -35,15 +34,19 @@ public class TeamlistController {
     private ObservableList<ObservableList> data;
     private List itemList;
 
-    @FXML void initialize() {
+    @FXML void initialize() throws SQLException {
         SQLite sqLite = new SQLite();
+        sqLite.buildData(playersTableView,data,"players");
 
-
-        try {
-            buildData();
-        } catch (SQLException e) {
-            System.out.println(e.toString());
-        }
+        playersTableView.setRowFactory( tv -> {
+            TableRow<List> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty())){
+                    editRow();
+                }
+            });
+            return row;
+        });
     }
 
     //TODO: Change buttons to TOGGLE buttons
@@ -55,57 +58,6 @@ public class TeamlistController {
         sceneManipulationHelper.activate(clickedBtn.getId());
         }
 
-    //CONNECTION DATABASE
-    public void buildData() throws SQLException {
-        data = FXCollections.observableArrayList();
-        playersTableView.getColumns().clear();
-
-        Connection conn;
-        SQLite sqLite = new SQLite();
-        conn = sqLite.connect();
-
-        //SQL FOR SELECTING ALL OF CUSTOMER
-        String SQL = "SELECT * FROM players";
-        ResultSet rs = conn.createStatement().executeQuery(SQL);
-        /**
-         * ********************************
-         * TABLE COLUMN ADDED DYNAMICALLY *
-         *********************************
-         */
-        for (int i = 1; i < rs.getMetaData().getColumnCount(); i++) {
-            final int j = i;
-            TableColumn col = new TableColumn(rs.getMetaData().getColumnLabel(i + 1));
-            col.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>) param -> new SimpleStringProperty(param.getValue().get(j).toString()));
-            col.prefWidthProperty().bind(playersTableView.widthProperty().divide(rs.getMetaData().getColumnCount()));
-            playersTableView.getColumns().addAll(col);
-            System.out.println("Column [" + i + "] ");
-        }
-        /**
-         * ******************************
-         * Data added to ObservableList *
-         *******************************
-         */
-        while (rs.next()){
-            ObservableList<String> row = FXCollections.observableArrayList();
-            for(int i = 1; i <= rs.getMetaData().getColumnCount(); i++){
-                row.add(rs.getString(i));
-            }
-            System.out.println("Row added" + row);
-            data.add(row);
-        }
-        playersTableView.setItems(data);
-        playersTableView.setEditable(true);
-        // On row double click
-        playersTableView.setRowFactory( tv -> {
-            TableRow<List> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (! row.isEmpty())){
-                    editRow();
-                }
-            });
-            return row;
-        });
-    }
 
     public void addNewRowToTable(ActionEvent actionEvent) throws SQLException {
         SQLite sqLite = new SQLite();
@@ -123,7 +75,7 @@ public class TeamlistController {
             updateStatement.executeUpdate();
             System.out.println("Row inserted");
 
-        buildData();
+        sqLite.buildData(playersTableView,data,"players");
     }
 
     public void deleteRow(ActionEvent actionEvent) throws SQLException {
@@ -134,7 +86,7 @@ public class TeamlistController {
         deleteStatement.setString(1, list.get(0).toString());
         deleteStatement.executeUpdate();
 
-        buildData();
+        sqLite.buildData(playersTableView,data,"players");
     }
 
     public void editRow() {
@@ -169,16 +121,11 @@ public class TeamlistController {
             updateStatement.executeUpdate();
             System.out.println("Row updated");
 
-            buildData();
+            sqLite.buildData(playersTableView,data,"players");
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
-
-    public void comboBoxWasUpdated(ActionEvent actionEvent) {
-
-    }
-
 
 }
 
