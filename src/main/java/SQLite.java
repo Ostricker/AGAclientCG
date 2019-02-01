@@ -7,14 +7,11 @@ public class SQLite {
     public void createTable(){
     }
 
-    //TODO: Open DB here. Code here - init in main
     public Connection connect(){
         String url = "jdbc:sqlite:src/main/database/main_database.db";
-
         Connection con = null;
         try {
             con = DriverManager.getConnection(url);
-            System.out.println("Connection estabilished");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -26,8 +23,10 @@ public class SQLite {
         statement.execute(insertString);
     }
 
-    //TODO: SELECT statement with parameters
-    public void selectFromTable() throws SQLException {
+    public void getFromTable() throws SQLException {
+
+        PreparedStatement preparedStatement = connect().prepareStatement("SELECT name FROM sqlite_master WHERE type='table'");
+
     }
 
     //TODO: UPDATE statement with parameters

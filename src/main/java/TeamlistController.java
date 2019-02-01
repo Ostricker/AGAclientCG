@@ -25,6 +25,7 @@ public class TeamlistController {
     public TextField teamTextField;
     public TextField positionTextField;
     public TextField steamIDTextField;
+    public ComboBox tableChangeComboBox;
 
     @FXML private ResourceBundle resources;
     @FXML private URL location;
@@ -32,8 +33,12 @@ public class TeamlistController {
     public Button dashboardButton;
     public TableView playersTableView;
     private ObservableList<ObservableList> data;
+    private List itemList;
 
     @FXML void initialize() {
+        SQLite sqLite = new SQLite();
+
+
         try {
             buildData();
         } catch (SQLException e) {
@@ -50,7 +55,6 @@ public class TeamlistController {
         sceneManipulationHelper.activate(clickedBtn.getId());
         }
 
-        // TODO: graphic changes to table view so it looks good
     //CONNECTION DATABASE
     public void buildData() throws SQLException {
         data = FXCollections.observableArrayList();
@@ -60,7 +64,6 @@ public class TeamlistController {
         SQLite sqLite = new SQLite();
         conn = sqLite.connect();
 
-        //TODO: Prepare SQL statement based on buttons pressed
         //SQL FOR SELECTING ALL OF CUSTOMER
         String SQL = "SELECT * FROM players";
         ResultSet rs = conn.createStatement().executeQuery(SQL);
@@ -73,8 +76,7 @@ public class TeamlistController {
             final int j = i;
             TableColumn col = new TableColumn(rs.getMetaData().getColumnLabel(i + 1));
             col.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>) param -> new SimpleStringProperty(param.getValue().get(j).toString()));
-
-            col.setCellFactory(TextFieldTableCell.forTableColumn());
+            col.prefWidthProperty().bind(playersTableView.widthProperty().divide(rs.getMetaData().getColumnCount()));
             playersTableView.getColumns().addAll(col);
             System.out.println("Column [" + i + "] ");
         }
@@ -88,48 +90,95 @@ public class TeamlistController {
             for(int i = 1; i <= rs.getMetaData().getColumnCount(); i++){
                 row.add(rs.getString(i));
             }
-            System.out.println("Row [1] added" + row);
+            System.out.println("Row added" + row);
             data.add(row);
         }
         playersTableView.setItems(data);
         playersTableView.setEditable(true);
+        // On row double click
+        playersTableView.setRowFactory( tv -> {
+            TableRow<List> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty())){
+                    editRow();
+                }
+            });
+            return row;
+        });
     }
 
-    public void confirmTableUpdate(ActionEvent actionEvent) throws SQLException {
-        String statement = "INSERT INTO players(FirstName,LastName,Nickname,Team,Position,SteamID64) VALUES (\""+nameTextField.getText()+"\",\""+lastNameTextField.getText()+"\",\""+nicknameTextField.getText()+"\",\""+teamTextField.getText()+"\",\""+positionTextField.getText()+"\",\""+steamIDTextField.getText()+"\")";
-
+    public void addNewRowToTable(ActionEvent actionEvent) throws SQLException {
         SQLite sqLite = new SQLite();
-        sqLite.insertIntoTable(statement);
+        PreparedStatement updateStatement = null;
+
+            String sql = "INSERT INTO players(FirstName, LastName, Nickname, Team, Position, SteamID64) VALUES (?,?,?,?,?,?)";
+            updateStatement = sqLite.connect().prepareStatement(sql);
+
+            updateStatement.setString(1, nameTextField.getText());
+            updateStatement.setString(2, lastNameTextField.getText());
+            updateStatement.setString(3, nicknameTextField.getText());
+            updateStatement.setString(4, teamTextField.getText());
+            updateStatement.setString(5, positionTextField.getText());
+            updateStatement.setString(6, steamIDTextField.getText());
+            updateStatement.executeUpdate();
+            System.out.println("Row inserted");
 
         buildData();
     }
 
     public void deleteRow(ActionEvent actionEvent) throws SQLException {
         List list = (List) playersTableView.getSelectionModel().getSelectedItem();
-        String statement = "DELETE FROM players WHERE id = "+list.get(0)+"";
 
         SQLite sqLite = new SQLite();
-        sqLite.insertIntoTable(statement);
-
-        buildData();
-
-    }
-
-    public void updateRow(ActionEvent actionEvent) throws SQLException {
-        List list = (List) playersTableView.getSelectionModel().getSelectedItem();
-        String statement = "UPDATE players SET FirstName = \""+list.get(1)+
-                                            "\",LastName =\""+list.get(2)+
-                                            "\", Nickname = \""+list.get(3)+
-                                            "\", Team = \""+list.get(4)+
-                                            "\", Position = \""+list.get(5)+
-                                            "\", SteamID64 = \""+list.get(6)+
-                                            "\" WHERE ID = \""+list.get(0)+"\"";
-
-
-        SQLite sqLite = new SQLite();
-        sqLite.insertIntoTable(statement);
+        PreparedStatement deleteStatement = sqLite.connect().prepareStatement("DELETE FROM players WHERE ID=?");
+        deleteStatement.setString(1, list.get(0).toString());
+        deleteStatement.executeUpdate();
 
         buildData();
     }
+
+    public void editRow() {
+        itemList = (List) playersTableView.getSelectionModel().getSelectedItem();
+        nameTextField.setText(itemList.get(1).toString());
+        lastNameTextField.setText(itemList.get(2).toString());
+        nicknameTextField.setText(itemList.get(3).toString());
+        teamTextField.setText(itemList.get(4).toString());
+        positionTextField.setText(itemList.get(5).toString());
+        steamIDTextField.setText(itemList.get(6).toString());
+    }
+
+    public void updateRow(ActionEvent actionEvent) {
+        itemList.add(1, nameTextField.getText());
+        itemList.add(2, lastNameTextField.getText());
+        itemList.add(3, nicknameTextField.getText());
+        itemList.add(4, teamTextField.getText());
+        itemList.add(5, positionTextField.getText());
+        itemList.add(6, steamIDTextField.getText());
+        System.out.println(itemList);
+
+        SQLite sqLite = new SQLite();
+        PreparedStatement updateStatement = null;
+        try {
+            String sql = "UPDATE players SET FirstName=?,LastName=?,Nickname=?,Team=?,Position=?,SteamID64=? WHERE ID=?";
+
+            updateStatement = sqLite.connect().prepareStatement(sql);
+            for (int i=1; i<=6 ;i++){
+                updateStatement.setString(i, itemList.get(i).toString());
+            }
+            updateStatement.setString(7, itemList.get(0).toString());
+            updateStatement.executeUpdate();
+            System.out.println("Row updated");
+
+            buildData();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void comboBoxWasUpdated(ActionEvent actionEvent) {
+
+    }
+
+
 }
 

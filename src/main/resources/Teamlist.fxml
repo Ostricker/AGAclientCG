@@ -163,7 +163,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <ComboBox prefHeight="25.0" prefWidth="196.0" />
+                  <ComboBox fx:id="tableChangeComboBox" onAction="#comboBoxWasUpdated" prefHeight="25.0" prefWidth="196.0" />
                   <Pane prefHeight="57.0" prefWidth="242.0" />
                   <TextField fx:id="nameTextField" prefHeight="25.0" prefWidth="156.0" promptText="Jméno">
                      <VBox.margin>
@@ -195,11 +195,23 @@
                         <Insets bottom="5.0" left="20.0" right="20.0" top="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <Button mnemonicParsing="false" onAction="#confirmTableUpdate" text="Potvrdit">
+                  <HBox alignment="CENTER" prefHeight="52.0" prefWidth="242.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#addNewRowToTable" text="ADD NEW">
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#updateRow" text="UPDATE">
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
                      <VBox.margin>
-                        <Insets top="10.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
-                  </Button>
+                  </HBox>
                </children></VBox>
          </left>
          <right>
@@ -208,14 +220,9 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </BorderPane.margin>
                <children>
-                  <Button mnemonicParsing="false" onAction="#updateRow" text="UPDATE">
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="10.0" />
-                     </VBox.margin>
-                  </Button>
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#deleteRow" text="DELETE">
                      <VBox.margin>
-                        <Insets bottom="10.0" top="10.0" />
+                        <Insets bottom="10.0" top="20.0" />
                      </VBox.margin></Button>
                </children></VBox>
          </right>
